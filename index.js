@@ -1,5 +1,33 @@
 const express = require('express')
 const app = express()
+var bodyParser = require('body-parser')
+
+const isLoggedIn = (req, res, next) => {
+  let loggedIn = false // Explanation purpose
+  if(loggedIn) {
+    next()
+  } else {
+    res.json({
+      message: "You're not logged in! Please login"
+    })
+  }
+}
+
+const isPremium = (req, res, next) => {
+  let premium = false // Explanation purpose
+  if(premium) {
+    next()
+  } else {
+    res.json({
+      message: "You're not a Premium user. Please upgrade your plan!"
+    })
+  }
+}
+
+//Attaching middleware to application
+// .use() applies middleware to all routes
+app.use(bodyParser.urlencoded())
+// app.use(isLoggedIn)
 
 app.get('/', (req, res) => {
   res.send('Our first Node Express Server!')
@@ -53,8 +81,23 @@ app.get('/api/users', (req, res) => {
   res.json(users)
 })
 
-app.get('/animals', (req, res) => {
+// Private route
+app.get('/animals', isLoggedIn, (req, res) => {
   res.sendFile(__dirname + '/index.html')
+})
+
+// Private route
+app.get('/register', isLoggedIn, isPremium, (req, res) => {
+  res.sendFile(__dirname + '/register.html')
+})
+
+app.get('/register/success', (req, res) => {
+  res.send('You have registered successfully!')
+})
+
+app.post('/process-form', (req, res) => {
+  console.log(req.body)
+  res.redirect('/register/success')
 })
 
 app.listen(3000, () => {
@@ -100,7 +143,7 @@ app.listen(3000, () => {
 
   - Client Server Architecture
     https://darvishdarab.github.io/cs421_f20/assets/images/client-server-1-d85a93ea16590c10bed340dd78294d0d.png
-
+  - Middleware: https://miro.medium.com/v2/resize:fit:720/format:webp/1*RgPEcCE3mHSGR-fS5lXTCQ.png
 
   - npm init -y: Initialize Node Application
 */

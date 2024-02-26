@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        input, button {
+            padding: 5px 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/process-form">
+        <label>First Name</label>
+        <input type="text" name="firstName" placeholder="John"><br>
+        <label>Last Name</label>
+        <input type="text" name="lastName" placeholder="Doe"><br>
+        <label>Email</label>
+        <input type="email" name="email" placeholder="john@xyz.com"><br>
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>
